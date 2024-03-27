@@ -2,6 +2,7 @@
 
 import { useFormStatus, useFormState } from 'react-dom';
 import { loginAction } from '@/server-actions/login';
+import { signupAction } from '@/server-actions/signup';
 
 import Footer from '@/components/footer';
 import Header from '@/components/header';
@@ -17,11 +18,31 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { signupAction } from '@/server-actions/signup';
+import { Alert, AlertTitle } from '@/components/ui/alert';
+import { TypographyP, TypographySmall } from '@/components/ui/typography';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export default function LoginCard() {
+  const router = useRouter();
   const [loginState, loginFormAction] = useFormState(loginAction, null);
   const [signupState, signupFormAction] = useFormState(signupAction, null);
+
+  if (loginState?.data || signupState?.data) {
+    if (
+      loginState?.data?.role === 'teacher' ||
+      signupState?.data?.role === 'teacher'
+    ) {
+      router.push('/teacher');
+    } else {
+      router.push('/student');
+    }
+    toast.success('Done');
+  }
+
+  if (loginState?.error || signupState?.error) {
+    toast.error(loginState?.error?.message || signupState?.error?.message);
+  }
 
   return (
     <>
@@ -42,6 +63,11 @@ export default function LoginCard() {
                   {/* <CardDescription>Please login once</CardDescription> */}
                 </CardHeader>
                 <CardContent className="space-y-2">
+                  {loginState?.error && (
+                    <TypographySmall className="text-red-500">
+                      {loginState?.error?.message}
+                    </TypographySmall>
+                  )}
                   <div className="space-y-1">
                     <Label htmlFor="email">Email</Label>
                     <Input
@@ -76,11 +102,16 @@ export default function LoginCard() {
                   {/* <CardDescription>Please login once</CardDescription> */}
                 </CardHeader>
                 <CardContent className="space-y-2">
+                  {signupState?.error && (
+                    <TypographySmall className="text-red-500">
+                      {signupState?.error?.message}
+                    </TypographySmall>
+                  )}
                   <div className="space-y-1">
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="username">Name</Label>
                     <Input
-                      name="name"
-                      id="name"
+                      name="username"
+                      id="username"
                       type="text"
                       placeholder="Your Name"
                     />
@@ -121,6 +152,10 @@ export default function LoginCard() {
           </TabsContent>
         </Tabs>
       </main>
+
+      <pre className="text-red-50 bg-slate-900 rounded-md font-semibold p-4 m-4">
+        {JSON.stringify({ loginState, signupState }, null, 2)}
+      </pre>
 
       <Footer />
     </>

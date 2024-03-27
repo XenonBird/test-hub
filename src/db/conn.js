@@ -10,9 +10,7 @@ export async function connectToDatabase() {
   if (connectionAttempts < 3 && mongoose.connection.readyState === 0) {
     connectionAttempts++;
 
-    await mongoose.connect(mongoURI, {
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(mongoURI, { dbName: 'test-hub' });
 
     // Connection successful
     mongoose.connection.on('connected', () => {

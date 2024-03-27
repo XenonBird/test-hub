@@ -5,30 +5,19 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: [true, 'Username is required'],
-    minlength: [3, 'Username must be at least 3 characters long'],
-    maxlength: [50, 'Username must not exceed 50 characters'],
   },
   email: {
     type: String,
     required: [true, 'Email is required'],
     unique: true,
-    lowercase: true,
-    validate: {
-      validator: function (value) {
-        // Basic email format validation
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-      },
-      message: 'Invalid email address',
-    },
   },
-  password: {
+  hash: {
     type: String,
-    required: [true, 'Password is required'],
-    minlength: [6, 'Password must be at least 6 characters long'],
+    required: [true, 'Hashed password is required'],
   },
   role: {
     type: String,
-    enum: ['student', 'teacher'],
+    enum: ['student', 'teacher', 'both', 'admin'],
     default: 'student',
   },
   exams: [
@@ -56,4 +45,4 @@ const userSchema = new mongoose.Schema({
 });
 
 // Create User model
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.models.User || mongoose.model('User', userSchema);
