@@ -1,6 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Sheet,
   SheetClose,
@@ -14,8 +12,9 @@ import {
 import { TypographyP } from './ui/typography';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { LogoutButton } from '@/components/logout-button';
 
-export function Menu({ links, className }) {
+export function Menu({ links, className, logoutButton }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -48,12 +47,20 @@ export function Menu({ links, className }) {
               </Button>
             </SheetClose>
           ))}
+
+          {/* {logoutButton && (
+            <SheetClose asChild>
+              <LogoutButton />
+            </SheetClose>
+          )} */}
         </div>
-        {/* <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
-        </SheetFooter> */}
+        <SheetFooter>
+          {logoutButton && (
+            <SheetClose asChild>
+              <LogoutButton />
+            </SheetClose>
+          )}
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

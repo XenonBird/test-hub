@@ -153,9 +153,9 @@ export default function LoginCard() {
         </Tabs>
       </main>
 
-      <pre className="text-red-50 bg-slate-900 rounded-md font-semibold p-4 m-4">
+      {/* <pre className="text-red-50 bg-slate-900 rounded-md font-semibold p-4 m-4">
         {JSON.stringify({ loginState, signupState }, null, 2)}
-      </pre>
+      </pre> */}
 
       <Footer />
     </>

@@ -30,4 +30,4 @@ export const roleValidation = z
   .enum(['student', 'teacher', 'both', 'admin'], {
     invalid_type_error: 'Invalid role',
   })
-  .default('student');
+  .default('both');

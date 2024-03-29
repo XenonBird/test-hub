@@ -4,7 +4,24 @@ import { NextResponse } from 'next/server';
 import { getTokenDataFromCookies } from './lib/token';
 
 export default async function middleware(request) {
-  //          /teacher
+  if (
+    request.nextUrl.pathname.startsWith('/teacher') ||
+    request.nextUrl.pathname.startsWith('/student')
+  ) {
+    const token = await getTokenDataFromCookies();
+    const response = NextResponse.next();
+
+    if (token.error) {
+      return NextResponse.redirect(new URL('/auth', request.url));
+    }
+
+    return response;
+  }
+}
+
+/**
+
+// teacher route authorization
   if (request.nextUrl.pathname.startsWith('/teacher')) {
     const token = await getTokenDataFromCookies();
     const response = NextResponse.next();
@@ -30,26 +47,4 @@ export default async function middleware(request) {
     }
   }
 
-  //          /student
-  if (request.nextUrl.pathname.startsWith('/student')) {
-    const token = await getTokenDataFromCookies();
-    const response = NextResponse.next();
-
-    if (token.error) {
-      return NextResponse.redirect(new URL('/auth', request.url));
-    }
-
-    switch (token.data?.role) {
-      case 'student':
-        return response;
-      case 'both':
-        return response;
-      case 'admin':
-        return response;
-      case 'teacher':
-        return NextResponse.redirect(new URL('/teacher', request.url));
-      default:
-        return NextResponse.redirect(new URL('/', request.url));
-    }
-  }
-}
+ */

@@ -23,10 +23,14 @@ export default function UserPageLayout({ children }) {
       text: 'Profile',
       address: '/student/profile',
     },
+    {
+      text: 'Be Teacher',
+      address: '/teacher',
+    },
   ];
   return (
     <>
-      <Header links={links} />
+      <Header links={links} logoutButton={true} />
       {children}
       <Footer />
     </>
