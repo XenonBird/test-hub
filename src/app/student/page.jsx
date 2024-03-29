@@ -1,4 +1,4 @@
-import { TestReportCard } from '@/components/custom-cards/report-card';
+import { CustomCardForView } from '@/components/custom-cards/custom-card-for-view';
 import { MaxWidthDivFrame } from '@/components/frames';
 import { Button } from '@/components/ui/button';
 import { TypographyH2, TypographyLead } from '@/components/ui/typography';
@@ -52,16 +52,20 @@ const StudentDashboardPage = () => {
       </MaxWidthDivFrame>
       <MaxWidthDivFrame className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-items-center">
         {upcomingExams.map((exam, index) => (
-          <TestReportCard
+          <CustomCardForView
             key={'exam_' + index}
             title={exam.name}
             description={exam.description}
             from={exam.from}
-            href={`/student/exams/${exam.id}`}
             fields={[
               { name: 'Full marks', value: exam.marks || 0 },
               { name: 'Date', value: exam.date },
             ]}
+            buttonBox={
+              <Button className="w-full">
+                <Link href={`/student/exams/${exam.id}`}>Open</Link>
+              </Button>
+            }
           />
         ))}
       </MaxWidthDivFrame>

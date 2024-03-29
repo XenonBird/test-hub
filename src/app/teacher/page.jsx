@@ -1,4 +1,4 @@
-import { TestReportCard } from '@/components/custom-cards/report-card';
+import { CustomCardForView } from '@/components/custom-cards/custom-card-for-view';
 import { MaxWidthDivFrame } from '@/components/frames';
 import { Button } from '@/components/ui/button';
 import { TypographyH2 } from '@/components/ui/typography';
@@ -15,41 +15,53 @@ const DashboardPage = () => {
       </MaxWidthDivFrame>
 
       <MaxWidthDivFrame className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-items-center">
-        <TestReportCard
+        <CustomCardForView
           title="Geography test - class VIII"
           description="India, Asia & South Africa"
           from="Sir Issac Newton"
-          href="/teacher/exams/1234"
           fields={[
             { name: 'questions', value: '100' },
             { name: 'attendees', value: '17' },
             { name: 'average', value: '45.78' },
             { name: 'date', value: '13 July' },
           ]}
+          buttonBox={
+            <Button className="w-full">
+              <Link href="/teacher/exams/1234">Open</Link>
+            </Button>
+          }
         />
-        <TestReportCard
+        <CustomCardForView
           title="Geography test - class VIII"
           description="India, Asia & South Africa"
           from="Sir Issac Newton"
-          href="/teacher/exams/1234"
           fields={[
             { name: 'questions', value: '100' },
             { name: 'attendees', value: '17' },
             { name: 'average', value: '45.78' },
             { name: 'date', value: '13 July' },
           ]}
+          buttonBox={
+            <Button className="w-full">
+              <Link href="/teacher/exams/1234">Open</Link>
+            </Button>
+          }
         />
-        <TestReportCard
+        <CustomCardForView
           title="Geography test - class VIII"
           description="India, Asia & South Africa"
           from="Sir Issac Newton"
-          href="/teacher/exams/1234"
           fields={[
             { name: 'questions', value: '100' },
             { name: 'attendees', value: '17' },
             { name: 'average', value: '45.78' },
             { name: 'date', value: '13 July' },
           ]}
+          buttonBox={
+            <Button className="w-full">
+              <Link href="/teacher/exams/1234">Open</Link>
+            </Button>
+          }
         />
       </MaxWidthDivFrame>
 

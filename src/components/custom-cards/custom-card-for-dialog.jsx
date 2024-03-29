@@ -24,7 +24,13 @@ import {
 
 import Link from 'next/link';
 
-export function CardWithDialog({ title, description, from, fields, href }) {
+export function CustomCardWithDialog({
+  title,
+  description,
+  from,
+  fields,
+  href,
+}) {
   return (
     <Card className="w-full">
       <CardHeader>

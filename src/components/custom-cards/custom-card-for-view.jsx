@@ -3,7 +3,6 @@ import {
   TypographyP,
   TypographySmall,
 } from '@/components/ui/typography';
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -12,19 +11,29 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import Link from 'next/link';
 
-export function TestReportCard({ title, description, from, fields, href }) {
+export function CustomCardForView({
+  title,
+  description,
+  from,
+
+  fields,
+
+  buttonBox,
+}) {
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-        <TypographySmall className="text-right">~ {from}</TypographySmall>
-      </CardHeader>
+      {title && description && from && (
+        <CardHeader>
+          {title && <CardTitle>{title}</CardTitle>}
+          {description && <CardDescription>{description}</CardDescription>}
+          {from && (
+            <TypographySmall className="text-right">~ {from}</TypographySmall>
+          )}
+        </CardHeader>
+      )}
 
-      {fields?.length ? (
+      {fields?.length && (
         <CardContent>
           {/* <Progress value={percentage} className="mb-4" /> */}
           <div className="grid grid-cols-2 gap-4">
@@ -39,21 +48,14 @@ export function TestReportCard({ title, description, from, fields, href }) {
             ))}
           </div>
         </CardContent>
-      ) : (
-        <></>
       )}
 
-      <CardFooter className="flex justify-between">
-        {/* <Button variant="outline">
-          <i className="fi fi-rr-menu-dots"></i>
-        </Button> */}
-        <Button className="w-full">
-          <Link href={href}>
-            Open
-            {/* <i className="fi fi-rr-overview"></i> */}
-          </Link>
-        </Button>
-      </CardFooter>
+      {buttonBox && <CardFooter>{buttonBox}</CardFooter>}
+      {/* <CardFooter className="flex justify-between p-0">
+          <Button className="w-full">
+            <Link href={href}>Open</Link>
+          </Button>
+        </CardFooter> */}
     </Card>
   );
 }
