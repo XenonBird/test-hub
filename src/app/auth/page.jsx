@@ -22,6 +22,7 @@ import { Alert, AlertTitle } from '@/components/ui/alert';
 import { TypographyP, TypographySmall } from '@/components/ui/typography';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import { SubmitButton } from '@/components/custom-button/custom-button-form-submit';
 
 export default function LoginCard() {
   const router = useRouter();
@@ -88,7 +89,7 @@ export default function LoginCard() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <SubmitButton />
+                  <SubmitButton text="Login" />
                 </CardFooter>
               </form>
             </Card>
@@ -145,7 +146,7 @@ export default function LoginCard() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <SubmitButton />
+                  <SubmitButton text="Signup" />
                 </CardFooter>
               </form>
             </Card>
@@ -161,15 +162,3 @@ export default function LoginCard() {
     </>
   );
 }
-
-const SubmitButton = () => {
-  const status = useFormStatus();
-  return (
-    <Button variant={status.pending ? 'disabled' : 'default'} type="Submit">
-      <span>Submit</span>{' '}
-      {status.pending && (
-        <i className="fi fi-rr-spinner animate-spin flex justify-center items-center ml-4"></i>
-      )}
-    </Button>
-  );
-};

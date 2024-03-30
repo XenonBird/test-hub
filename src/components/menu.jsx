@@ -12,7 +12,7 @@ import {
 import { TypographyP } from './ui/typography';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { LogoutButton } from '@/components/logout-button';
+import { LogoutButton } from '@/components/custom-button/custom-button-logout';
 
 export function Menu({ links, className, logoutButton }) {
   return (

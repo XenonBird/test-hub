@@ -4,7 +4,7 @@ import { useFormStatus, useFormState } from 'react-dom';
 import { useRouter } from 'next/navigation';
 
 import { logoutAction } from '@/server-actions/logout';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import toast from 'react-hot-toast';
 
 export function LogoutButton() {

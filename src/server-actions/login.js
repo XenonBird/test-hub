@@ -40,11 +40,21 @@ export async function loginAction(state, formData) {
 
     return { message: 'Okay', data: payload };
   } catch (error) {
-    console.log({ error: { message: error?.message || 'Validation error' } });
-    if (error?.errors?.length) {
-      return { error: { message: error.errors[0].message } };
+    console.log('🔴 ', JSON.stringify(error, null, 2));
+    if (error.name === 'ZodError') {
+      // If the error is a Zod validation
+      return {
+        // error: error.flatten().fieldErrors,
+        error: error.issues[0],
+        status: 400,
+      };
     } else {
-      return { error: { message: error.message } };
+      // Handle other errors
+      console.error('Error Login:', error);
+      return {
+        error: { message: 'An error occurred while adding the exam paper' },
+        status: 500,
+      };
     }
   }
 }

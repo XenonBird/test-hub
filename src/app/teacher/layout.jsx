@@ -28,13 +28,12 @@ export default function UserPageLayout({ children }) {
       address: '/student',
     },
   ];
+
   return (
     <>
-      <div>
-        <Header links={links} logoutButton={true} />
-        {children}
-        <Footer />
-      </div>
+      <Header links={links} logoutButton={true} />
+      {children}
+      <Footer />
     </>
   );
 }

@@ -1,5 +1,9 @@
 'use client';
 
+import { useState } from 'react';
+import { useFormState } from 'react-dom';
+import { addQuestion } from '@/server-actions/add-exam';
+
 import { QuestionAddingCard } from '@/components/custom-cards/custom-card-for-question';
 import { MaxWidthDivFrame } from '@/components/frames';
 import { Button } from '@/components/ui/button';
@@ -9,12 +13,21 @@ import {
   TypographyLarge,
   TypographyLead,
 } from '@/components/ui/typography';
-import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { SubmitButton } from '@/components/custom-button/custom-button-form-submit';
+import { useRouter } from 'next/navigation';
 
 const CreateExamPage = () => {
+  const router = useRouter();
+
+  const [addQuestionState, addQuestionFormAction] = useFormState(
+    addQuestion,
+    null
+  );
+
   const [formData, setFormData] = useState({
-    examTitle: '',
-    examDescription: '',
+    title: '',
+    description: '',
     questions: [
       {
         question: '',
@@ -75,14 +88,21 @@ const CreateExamPage = () => {
     setFormData({ ...formData, questions: updatedQuestions });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Submit the form data to the server
-    console.log(formData);
-  };
+  if (addQuestionState?.data) router.push('/teacher/exams');
 
   return (
-    <form onSubmit={handleSubmit} style={{ all: 'unset' }}>
+    <form action={addQuestionFormAction} style={{ all: 'unset' }}>
+      <textarea
+        name="exam-data-json"
+        value={JSON.stringify(formData)}
+        className="hidden"
+        readOnly
+      />
+
+      {/* <pre className="m-4 p-2 bg-slate-900 text-slate-200 overflow-x-scroll">
+        {JSON.stringify(addQuestionState, null, 2)}
+      </pre> */}
+
       <MaxWidthDivFrame className="pb-0">
         <TypographyH3 className="w-full text-center">
           Create New Exam
@@ -92,39 +112,44 @@ const CreateExamPage = () => {
       <MaxWidthDivFrame className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 justify-items-center items-start">
         {/* <QuestionAddingCard /> */}
         <div className="col-span-full w-full">
+          {addQuestionState?.error && (
+            <p className="text-red-500 text-center p-2">
+              {addQuestionState?.error?.message}{' '}
+              {/* {addQuestionState?.error?.path[0] === 'questions' &&
+                `at question no. ${addQuestionState?.error?.path[1] + 1}`} */}
+            </p>
+          )}
+
           <Card className="mx-auto max-w-md">
             <CardContent>
               <div className="mb-4">
-                <label htmlFor="examTitle" className="block font-bold mb-2">
+                <label htmlFor="title" className="block font-bold mb-2">
                   Exam Title
                 </label>
                 <input
                   type="text"
-                  id="examTitle"
-                  name="examTitle"
-                  value={formData.examTitle}
+                  id="title"
+                  name="title"
+                  value={formData.title}
                   onChange={(e) =>
-                    setFormData({ ...formData, examTitle: e.target.value })
+                    setFormData({ ...formData, title: e.target.value })
                   }
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="examDescription"
-                  className="block font-bold mb-2"
-                >
+                <label htmlFor="description" className="block font-bold mb-2">
                   Exam Description
                 </label>
                 <textarea
-                  id="examDescription"
-                  name="examDescription"
-                  value={formData.examDescription}
+                  id="description"
+                  name="description"
+                  value={formData.description}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      examDescription: e.target.value,
+                      description: e.target.value,
                     })
                   }
                   className="w-full border border-gray-300 rounded-lg px-3 py-2"
@@ -150,13 +175,10 @@ const CreateExamPage = () => {
         ))}
 
         <div className="col-span-full mx-auto">
-          <Button
+          <SubmitButton
             size="lg"
-            type="submit"
             className="my-8 bg-green-600 hover:bg-green-700"
-          >
-            Create Exam
-          </Button>
+          />
         </div>
       </MaxWidthDivFrame>
     </form>
